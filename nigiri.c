@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "uv.h"
+#include <json.h>
 
 #define CHECK(r, msg)                                       \
     if (r<0) {                                              \
@@ -28,6 +29,25 @@ static void on_alloc(uv_handle_t* client, size_t suggested_size, uv_buf_t* buf) 
 }
 
 int main(int argc,char *argv[]) {
+    struct json_object *jobj;
+    char *str = "{ \"msg-type\": [ \"0xdeadbeef\", \"irc log\" ], \
+		\"msg-from\": { \"class\": \"soldier\", \"name\": \"Wixilav\" }, \
+		\"msg-to\": { \"class\": \"supreme-commander\", \"name\": \"[Redacted]\" }, \
+		\"msg-log\": [ \
+			\"soldier: Boss there is a slight problem with the piece offering to humans\", \
+			\"supreme-commander: Explain yourself soldier!\", \
+			\"soldier: Well they don't seem to move anymore...\", \
+			\"supreme-commander: Oh snap, I came here to see them twerk!\" \
+			] \
+		}";
+
+    printf("str:\n---\n%s\n---\n\n", str);
+
+    jobj = json_tokener_parse(str);
+    printf("jobj from str:\n---\n%s\n---\n", json_object_to_json_string_ext(jobj, JSON_C_TO_STRING_SPACED | JSON_C_TO_STRING_PRETTY));
+
+    return 0;
+
     int status;
     struct sockaddr_in addr;
     uv_loop = uv_default_loop();
