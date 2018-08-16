@@ -4,6 +4,10 @@
 #include "uv.h"
 #include <json.h>
 
+#include "utils/logger_helper.h"
+
+#define MAIN_LOGGER_ID "main"
+
 #define CHECK(r, msg)                                       \
     if (r<0) {                                              \
         fprintf(stderr, "%s: %s\n", msg, uv_strerror(r));   \
@@ -29,6 +33,7 @@ static void on_alloc(uv_handle_t* client, size_t suggested_size, uv_buf_t* buf) 
 }
 
 int main(int argc,char *argv[]) {
+    /*
     struct json_object *jobj;
     char *str = "{ \"msg-type\": [ \"0xdeadbeef\", \"irc log\" ], \
 		\"msg-from\": { \"class\": \"soldier\", \"name\": \"Wixilav\" }, \
@@ -45,6 +50,17 @@ int main(int argc,char *argv[]) {
 
     jobj = json_tokener_parse(str);
     printf("jobj from str:\n---\n%s\n---\n", json_object_to_json_string_ext(jobj, JSON_C_TO_STRING_SPACED | JSON_C_TO_STRING_PRETTY));
+    */
+
+    if (LOGGER_VERSION != logger_version()) {
+        return EXIT_FAILURE;
+    }
+    logger_init();
+    logger_output_register(stdout);
+    logger_output_level_set(stdout, LOGGER_DEBUG);
+    logger_helper_init(MAIN_LOGGER_ID, LOGGER_DEBUG, true);
+
+    log_info(MAIN_LOGGER_ID, "Initializing cIRI core\n");
 
     return 0;
 
