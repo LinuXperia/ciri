@@ -1,4 +1,0 @@
-
-[submodule "deps/uvw"]
-	path = deps/uvw
-	url = https://github.com/skypjack/uvw.git
