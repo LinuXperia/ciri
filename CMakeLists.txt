@@ -1,5 +1,5 @@
 # cmake_minimum_required(VERSION <specify CMake version here>)
-project(nigiri)
+project(ciri)
 cmake_minimum_required(VERSION 3.5)
 set(CMAKE_CXX_STANDARD 14)
 
@@ -32,7 +32,7 @@ set(PROJECT_SOURCE_DIR  ${CMAKE_SOURCE_DIR}/source/)
 file(GLOB_RECURSE PROJECT_SOURCE_FILES ${PROJECT_SOURCE_DIR}/*.c)
 
 include_directories(source)
-add_executable(nigiri ${PROJECT_SOURCE_FILES})
+add_executable(ciri ${PROJECT_SOURCE_FILES})
 
-target_link_libraries(nigiri PRIVATE Threads::Threads ${LIBUV_STATIC_LIBRARY} ${JSONC_LIBRARY} ${LOGGER_LIBRARY})
-
+target_link_libraries(ciri PRIVATE Threads::Threads ${LIBUV_STATIC_LIBRARY} ${JSONC_LIBRARY} ${LOGGER_LIBRARY})
+target_compile_options(ciri PRIVATE -DLOGGER_ENABLE)
