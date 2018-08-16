@@ -1,2 +1,2 @@
 # nigiri
-C++ Iota Implementation
+C Iota Implementation
