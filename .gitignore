@@ -33,6 +33,5 @@
 
 .idea
 cmake-build-debug
-deps/libuv
 
 
