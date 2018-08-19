@@ -1,8 +1,6 @@
 .idea
 cmake-build-debug
-deps/argtable3/CMakeLists.txt
-deps/argtable3/Makefile
-deps/lmdb/libraries/liblmdb/Makefile
+deps
 
 # Prerequisites
 *.d
