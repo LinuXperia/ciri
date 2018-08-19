@@ -8,6 +8,7 @@ find_package(Threads REQUIRED)
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake")
 find_package(libuv REQUIRED)
+find_package(lmdb REQUIRED)
 find_package(jsonc REQUIRED)
 find_package(logger REQUIRED)
 
@@ -17,5 +18,5 @@ file(GLOB_RECURSE PROJECT_SOURCE_FILES ${PROJECT_SOURCE_DIR}/*.c)
 
 add_executable(ciri ${PROJECT_SOURCE_FILES})
 
-target_link_libraries(ciri PRIVATE Threads::Threads ${LIBUV_LIBRARY} ${JSONC_LIBRARY} ${LOGGER_LIBRARY})
+target_link_libraries(ciri PRIVATE Threads::Threads ${LIBUV_LIBRARY} ${JSONC_LIBRARY} ${LOGGER_LIBRARY} ${LMDB_LIBRARY})
 target_compile_options(ciri PRIVATE -DLOGGER_ENABLE)

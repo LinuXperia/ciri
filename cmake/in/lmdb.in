@@ -1,0 +1,49 @@
+project(LMDB)
+cmake_minimum_required(VERSION 2.8)
+
+#
+# Private CFLAGS for all targets
+#
+add_compile_options(-W -Wall -Wno-unused-parameter -Wbad-function-cast -Wuninitialized)
+
+#
+# The liblmdb library and its public CFLAGS/LDFLAGS (transitively added to dependent targets)
+#
+add_library(lmdb
+            mdb.c midl.c)
+target_compile_options(lmdb PUBLIC -pthread)
+target_link_libraries(lmdb PUBLIC -pthread)
+
+install(TARGETS lmdb EXPORT LMDB
+        DESTINATION lib
+        INCLUDES DESTINATION include)
+install(FILES lmdb.h
+        DESTINATION include)
+install(EXPORT LMDB
+        DESTINATION lib/cmake/LMDB
+        FILE LMDBConfig.cmake)
+
+#
+# The installable binaries
+#
+foreach(binary mdb_stat mdb_copy mdb_dump mdb_load)
+	add_executable(${binary} ${binary}.c)
+	target_link_libraries(${binary} lmdb)
+
+	install(TARGETS ${binary}
+	        DESTINATION bin)
+endforeach()
+
+#
+# The test binaries
+#
+foreach(binary mtest mtest2 mtest3 mtest4 mtest5)
+	add_executable(${binary} ${binary}.c)
+	target_link_libraries(${binary} lmdb)
+endforeach()
+
+# ...and the ones failing to build
+foreach(binary mtest6)
+	add_executable(${binary} EXCLUDE_FROM_ALL ${binary}.c)
+	target_link_libraries(${binary} lmdb)
+endforeach()
