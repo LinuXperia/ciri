@@ -1,5 +1,5 @@
 set(JSONC_DEPS_DIR ${CMAKE_SOURCE_DIR}/deps/json-c)
 execute_process(COMMAND ${CMAKE_COMMAND} -G "${CMAKE_GENERATOR}" . WORKING_DIRECTORY ${JSONC_DEPS_DIR})
 execute_process(COMMAND ${CMAKE_COMMAND} --build . WORKING_DIRECTORY ${JSONC_DEPS_DIR})
-find_library(JSONC_LIBRARY NAMES json-c.a json-c PATHS ${JSONC_DEPS_DIR} Release NO_DEFAULT_PATH)
+find_library(jsonc NAMES json-c.a json-c PATHS ${JSONC_DEPS_DIR} Release NO_DEFAULT_PATH)
 include_directories(${JSONC_DEPS_DIR})

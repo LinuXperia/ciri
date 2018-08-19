@@ -37,13 +37,16 @@ endforeach()
 #
 # The test binaries
 #
+#[[
 foreach(binary mtest mtest2 mtest3 mtest4 mtest5)
 	add_executable(${binary} ${binary}.c)
 	target_link_libraries(${binary} lmdb)
 endforeach()
-
+]]
 # ...and the ones failing to build
+#[[
 foreach(binary mtest6)
 	add_executable(${binary} EXCLUDE_FROM_ALL ${binary}.c)
 	target_link_libraries(${binary} lmdb)
 endforeach()
+]]

@@ -1,5 +1,5 @@
 set(LOGGER_DEPS_DIR ${CMAKE_SOURCE_DIR}/deps/logger)
 execute_process(COMMAND ${CMAKE_COMMAND} -G "${CMAKE_GENERATOR}" . WORKING_DIRECTORY ${LOGGER_DEPS_DIR})
 execute_process(COMMAND ${CMAKE_COMMAND} --build . WORKING_DIRECTORY ${LOGGER_DEPS_DIR})
-find_library(LOGGER_LIBRARY NAMES logger.a logger PATHS ${LOGGER_DEPS_DIR} PATH_SUFFIXES lib Release NO_DEFAULT_PATH)
+find_library(logger NAMES logger.a logger PATHS ${LOGGER_DEPS_DIR} PATH_SUFFIXES lib Release NO_DEFAULT_PATH)
 include_directories(${LOGGER_DEPS_DIR}/include)

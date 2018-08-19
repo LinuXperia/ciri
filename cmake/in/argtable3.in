@@ -1,0 +1,7 @@
+project(argtable3)
+cmake_minimum_required(VERSION 2.8)
+
+
+add_library(argtable3 argtable3.c)
+target_compile_options(argtable3 PUBLIC -pthread)
+target_link_libraries(argtable3 PUBLIC -pthread)

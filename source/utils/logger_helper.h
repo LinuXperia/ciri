@@ -5,15 +5,11 @@
  * Refer to the LICENSE file for licensing information
  */
 
-#ifndef COMMON_LOGGER_HELPER_H_
-#define COMMON_LOGGER_HELPER_H_
+#ifndef LOGGER_HELPER_H_
+#define LOGGER_HELPER_H_
 
 #include <logger.h>
 #include <stdbool.h>
-
-#ifdef __cplusplus
-extern "C" {
-#endif
 
 typedef struct logger_t logger_t;
 
@@ -35,8 +31,5 @@ extern void logger_helper_print(const char* const logger_id,
                                 logger_level_t level, const char* format, ...);
 extern void logger_helper_printer(const char* const string);
 
-#ifdef __cplusplus
-}
-#endif
 
-#endif  // COMMON_LOGGER_HELPER_H_
+#endif  // LOGGER_HELPER_H_
