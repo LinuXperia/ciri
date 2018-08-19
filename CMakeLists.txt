@@ -18,6 +18,8 @@ include_directories(source)
 set(PROJECT_SOURCE_DIR  ${CMAKE_SOURCE_DIR}/source/)
 file(GLOB_RECURSE PROJECT_SOURCE_FILES ${PROJECT_SOURCE_DIR}/*.c)
 
+configure_file(${CMAKE_SOURCE_DIR}/cmake/in/config.json.in ${CMAKE_BINARY_DIR}/config.json)
+
 add_executable(ciri ${PROJECT_SOURCE_FILES})
 
 target_link_libraries(ciri PRIVATE

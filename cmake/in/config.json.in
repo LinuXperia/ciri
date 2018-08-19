@@ -1,0 +1,61 @@
+{
+  "light": false,
+  "api": {
+    "debug": false,
+    "auth": {
+      "password": null,
+      "username": null
+    },
+    "http" : {
+      "useHttp" : true,
+      "host": "0.0.0.0",
+      "port": 14265
+    },
+    "https" : {
+      "useHttps" : false,
+      "host": "0.0.0.0",
+      "port": 14266,
+      "certificatePath" : "cert.pem",
+      "privateKeyPath" : "key.pem"
+    },
+    "limitRemoteAccess": [
+      "getNeighbors",
+      "addNeighbors",
+      "removeNeighbors",
+      "makeSnapshot",
+      "listAllAccounts",
+      "attachToTangle",
+      "interruptAttachingToTangle"
+    ],
+    "pow": {
+      "maxMinWeightMagnitude": 14,
+      "maxTransactions": 10000,
+      "usePowSrv": false,
+      "powSrvPath": "/tmp/powSrv.sock"
+    }
+  },
+  "log": {
+    "hello": true,
+    "level": "INFO",
+    "configurationFile": "logback.xml"
+  },
+  "node": {
+    "port": 14600,
+    "neighbors": ["udp://johnc.iota.cm:14601", "udp://95.216.32.33:14600"]
+  },
+  "database": {
+    "path": "data"
+  },
+  "snapshots" : {
+    "filename": "",
+    "path": "snapshots",
+    "loadFile": "",
+    "loadIRIFile": "snapshotMainnet.txt",
+    "loadIRISpentFile": "previousEpochsSpentAddresses.txt",
+    "loadIRITimestamp": 1525017600,
+    "interval": 0,
+    "period": 168,
+    "enableapi": true,
+    "keep": false
+  }
+}
