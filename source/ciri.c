@@ -46,6 +46,33 @@ int main(int argc,char *argv[]) {
 
     log_info(MAIN_LOGGER_ID, "Config file: %s\n", config->filename[0]);
 
+    char * buffer = 0;
+    long length;
+    FILE * f = fopen (config->filename[0], "rb");
+
+    if (f)
+    {
+        fseek (f, 0, SEEK_END);
+        length = ftell (f);
+        fseek (f, 0, SEEK_SET);
+        buffer = malloc (length);
+        if (buffer)
+        {
+            fread (buffer, 1, length, f);
+        }
+        fclose (f);
+    }
+
+    struct json_object *jobj, *jobj2;
+    if (buffer)
+    {
+        jobj = json_tokener_parse(buffer);
+        //log_info(MAIN_LOGGER_ID,"%s", json_object_to_json_string_ext(jobj, JSON_C_TO_STRING_SPACED | JSON_C_TO_STRING_PRETTY));
+        json_pointer_get(jobj, "/node/port", &jobj2);
+        int port = json_object_get_int(jobj2);
+        log_info(MAIN_LOGGER_ID,"Node port: %d\n", port);
+    }
+
     /* special case: '--help' takes precedence over error reporting */
     if (help->count > 0)
     {
@@ -68,26 +95,10 @@ int main(int argc,char *argv[]) {
         goto exit;
     }
 
-    exit:
+exit:
     /* deallocate each non-null entry in argtable[] */
     arg_freetable(argtable, sizeof(argtable) / sizeof(argtable[0]));
 
-    struct json_object *jobj;
-    char *str = "{ \"msg-type\": [ \"0xdeadbeef\", \"irc log\" ], \
-		\"msg-from\": { \"class\": \"soldier\", \"name\": \"Wixilav\" }, \
-		\"msg-to\": { \"class\": \"supreme-commander\", \"name\": \"[Redacted]\" }, \
-		\"msg-log\": [ \
-			\"soldier: Boss there is a slight problem with the piece offering to humans\", \
-			\"supreme-commander: Explain yourself soldier!\", \
-			\"soldier: Well they don't seem to move anymore...\", \
-			\"supreme-commander: Oh snap, I came here to see them twerk!\" \
-			] \
-		}";
-
-    printf("str:\n---\n%s\n---\n\n", str);
-
-    jobj = json_tokener_parse(str);
-    printf("jobj from str:\n---\n%s\n---\n", json_object_to_json_string_ext(jobj, JSON_C_TO_STRING_SPACED | JSON_C_TO_STRING_PRETTY));
 
     int rc;
     MDB_env *env;
