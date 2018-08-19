@@ -7,3 +7,6 @@
 [submodule "deps/lmdb"]
 	path = deps/lmdb
 	url = https://github.com/LMDB/lmdb.git
+[submodule "deps/libuv"]
+	path = deps/libuv
+	url = https://github.com/libuv/libuv.git

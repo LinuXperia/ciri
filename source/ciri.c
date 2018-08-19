@@ -4,6 +4,9 @@
 #include "uv.h"
 #include "lmdb.h"
 #include <json.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <unistd.h>
 
 #include "utils/logger_helper.h"
 
@@ -77,9 +80,32 @@ int main(int argc,char *argv[]) {
     /* Note: Most error checking omitted for simplicity */
 
     rc = mdb_env_create(&env);
+    if (rc) {
+        fprintf(stderr, "mdb_env_create: (%d) %s\n", rc, mdb_strerror(rc));
+        goto leave;
+    }
+
+    struct stat st = {0};
+
+    if (stat("./testdb", &st) == -1) {
+        mkdir("./testdb", 0700);
+    }
+
     rc = mdb_env_open(env, "./testdb", 0, 0664);
+    if (rc) {
+        fprintf(stderr, "mdb_env_open: (%d) %s\n", rc, mdb_strerror(rc));
+        goto leave;
+    }
     rc = mdb_txn_begin(env, NULL, 0, &txn);
+    if (rc) {
+        fprintf(stderr, "mdb_txn_begin: (%d) %s\n", rc, mdb_strerror(rc));
+        goto leave;
+    }
     rc = mdb_dbi_open(txn, NULL, 0, &dbi);
+    if (rc) {
+        fprintf(stderr, "mdb_dbi_open: (%d) %s\n", rc, mdb_strerror(rc));
+        goto leave;
+    }
 
     key.mv_size = sizeof(int);
     key.mv_data = sval;
