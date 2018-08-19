@@ -7,9 +7,4 @@
 [submodule "deps/libuv"]
 	path = deps/libuv
 	url = https://github.com/libuv/libuv.git
-[submodule "deps/argtable3"]
-	path = deps/argtable3
-	url = https://github.com/argtable/argtable3.git
-[submodule "deps/lmdb"]
-	path = deps/lmdb
-	url = https://github.com/LMDB/lmdb.git
+	
