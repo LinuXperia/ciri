@@ -21,12 +21,11 @@ void logger_helper_init(const char* const logger_id, logger_level_t level,
     id = logger_id_request(logger_id);
     logger_id_enable(id);
     logger_id_level_set(id, level);
-    logger_id_prefix_set(id,
-                         (LOGGER_PFX_DATE | LOGGER_PFX_NAME | LOGGER_PFX_LEVEL));
+    logger_id_prefix_set(id, (LOGGER_PFX_DATE | LOGGER_PFX_NAME | LOGGER_PFX_LEVEL));
     if (enable_color) {
         logger_color_prefix_enable();
         logger_color_message_enable();
-        logger_id_color_console_set(id, LOGGER_FG_GREEN, LOGGER_BG_BLACK,
+        logger_id_color_console_set(id, LOGGER_FG_BLACK, LOGGER_BG_BLUE,
                                     LOGGER_ATTR_BRIGHT | LOGGER_ATTR_UNDERLINE);
     }
 }

@@ -163,7 +163,7 @@ exit:
     mdb_dbi_close(env, dbi);
     mdb_env_close(env);
 
-    int status = server_create();
+    //int status = server_create();
 
     return 0;
 }

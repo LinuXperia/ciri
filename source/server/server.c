@@ -1,7 +1,7 @@
-#include "server/server.h"
 #include <stdlib.h>
 #include <uv.h>
 
+#include "server/server.h"
 
 #define CHECK(r, msg)                                       \
     if (r<0) {                                              \
