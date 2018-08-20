@@ -11,12 +11,10 @@
 #include "utils/handles/lock.h"
 #include "logger_helper.h"
 
-static lock_handle_t lock;
-
 void logger_helper_init(const char* const logger_id, logger_level_t level,
                         bool enable_color) {
     logger_id_t id;
-    lock_handle_init(&lock);
+    uv_mutex_init(&mutex);
     /* get a logging id, enable it and set log level */
     id = logger_id_request(logger_id);
     logger_id_enable(id);
@@ -25,17 +23,17 @@ void logger_helper_init(const char* const logger_id, logger_level_t level,
     if (enable_color) {
         logger_color_prefix_enable();
         logger_color_message_enable();
-        logger_id_color_console_set(id, LOGGER_FG_BLACK, LOGGER_BG_BLUE,
+        logger_id_color_console_set(id, LOGGER_FG_MAGENTA, LOGGER_BG_UNCHANGED,
                                     LOGGER_ATTR_BRIGHT | LOGGER_ATTR_UNDERLINE);
     }
 }
 
 void logger_helper_destroy(const char* const logger_id) {
     logger_id_t id;
-    lock_handle_lock(&lock);
+    uv_mutex_lock(&mutex);
     id = logger_id_request(logger_id);
     logger_id_release(id);
-    lock_handle_unlock(&lock);
+    uv_mutex_unlock(&mutex);
 }
 
 void logger_helper_print(const char* const logger_id, logger_level_t level,
@@ -44,9 +42,9 @@ void logger_helper_print(const char* const logger_id, logger_level_t level,
     va_list argp;
 
     va_start(argp, format);
-    lock_handle_lock(&lock);
+    uv_mutex_lock(&mutex);
     id = logger_id_request(logger_id);
     logger_va(id, level, format, argp);
-    lock_handle_unlock(&lock);
+    uv_mutex_unlock(&mutex);
     va_end(argp);
 }

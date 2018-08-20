@@ -4,16 +4,10 @@
 
 #include <argtable3.h>
 #include <json.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <unistd.h>
 
-#include "config_helper.h"
 #include "file_helper.h"
 #include "logger_helper.h"
+#include "config_helper.h"
 
 #define CONFIG_HELPER_LOGGER_ID "config_helper"
 
