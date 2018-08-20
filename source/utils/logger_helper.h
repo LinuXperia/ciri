@@ -13,6 +13,8 @@
 
 typedef struct logger_t logger_t;
 
+logger_level_t debug_level;
+
 #define LOG_LEVEL_ALL "ALL"
 #define LOG_LEVEL_DEBUG "DEBUG"
 #define LOG_LEVEL_INFO "INFO"
