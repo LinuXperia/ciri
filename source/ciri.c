@@ -88,7 +88,7 @@ int main(int argc,char *argv[]) {
 
     rc = mdb_env_create(&env);
     if (rc) {
-        fprintf(stderr, "mdb_env_create: (%d) %s\n", rc, mdb_strerror(rc));
+        log_info(MAIN_LOGGER_ID,"mdb_env_create: (%d) %s\n", rc, mdb_strerror(rc));
         goto leave;
     }
 
@@ -100,17 +100,17 @@ int main(int argc,char *argv[]) {
 
     rc = mdb_env_open(env, "./testdb", 0, 0664);
     if (rc) {
-        fprintf(stderr, "mdb_env_open: (%d) %s\n", rc, mdb_strerror(rc));
+        log_info(MAIN_LOGGER_ID,"mdb_env_open: (%d) %s\n", rc, mdb_strerror(rc));
         goto leave;
     }
     rc = mdb_txn_begin(env, NULL, 0, &txn);
     if (rc) {
-        fprintf(stderr, "mdb_txn_begin: (%d) %s\n", rc, mdb_strerror(rc));
+        log_info(MAIN_LOGGER_ID,"mdb_txn_begin: (%d) %s\n", rc, mdb_strerror(rc));
         goto leave;
     }
     rc = mdb_dbi_open(txn, NULL, 0, &dbi);
     if (rc) {
-        fprintf(stderr, "mdb_dbi_open: (%d) %s\n", rc, mdb_strerror(rc));
+        log_info(MAIN_LOGGER_ID,"mdb_dbi_open: (%d) %s\n", rc, mdb_strerror(rc));
         goto leave;
     }
 
@@ -123,7 +123,7 @@ int main(int argc,char *argv[]) {
     rc = mdb_put(txn, dbi, &key, &data, 0);
     rc = mdb_txn_commit(txn);
     if (rc) {
-        fprintf(stderr, "mdb_txn_commit: (%d) %s\n", rc, mdb_strerror(rc));
+        log_info(MAIN_LOGGER_ID,"mdb_txn_commit: (%d) %s\n", rc, mdb_strerror(rc));
         goto leave;
     }
     rc = mdb_txn_begin(env, NULL, MDB_RDONLY, &txn);
