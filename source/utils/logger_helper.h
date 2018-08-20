@@ -13,6 +13,11 @@
 
 typedef struct logger_t logger_t;
 
+#define LOG_LEVEL_ALL "ALL"
+#define LOG_LEVEL_DEBUG "DEBUG"
+#define LOG_LEVEL_INFO "INFO"
+#define LOG_LEVEL_ERROR "ERROR"
+
 #define log_debug(id, ...) logger_helper_print(id, LOGGER_DEBUG, __VA_ARGS__)
 #define log_info(id, ...) logger_helper_print(id, LOGGER_INFO, __VA_ARGS__)
 #define log_notice(id, ...) logger_helper_print(id, LOGGER_NOTICE, __VA_ARGS__)

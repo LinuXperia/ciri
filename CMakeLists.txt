@@ -4,6 +4,8 @@ cmake_minimum_required(VERSION 3.5)
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake")
 configure_file(${CMAKE_SOURCE_DIR}/cmake/in/config.json.in ${CMAKE_BINARY_DIR}/config.json)
 
+# Note: to refresh deps folder: git pull --recurse-submodules
+
 find_package(Threads REQUIRED)
 find_package(logger REQUIRED)
 find_package(argtable3 REQUIRED)

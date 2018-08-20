@@ -9,30 +9,23 @@
 #include <argtable3.h>
 
 #include "utils/logger_helper.h"
+#include "utils/file_helper.h"
 #include "server/server.h"
 
 #define MAIN_LOGGER_ID "main"
 
 struct arg_lit *help, *version;
 struct arg_file *config;
-struct arg_str *dlog;
+struct arg_str *dlvl;
 struct arg_end *end;
 
 int main(int argc,char *argv[]) {
-
-    if (LOGGER_VERSION != logger_version()) {
-        return EXIT_FAILURE;
-    }
-    logger_init();
-    logger_output_register(stdout);
-    logger_output_level_set(stdout, LOGGER_DEBUG);
-    logger_helper_init(MAIN_LOGGER_ID, LOGGER_DEBUG, true);
 
     void *argtable[] = {
             help    = arg_lit0(NULL, "help", "display this help and exit"),
             version = arg_lit0(NULL, "version", "display version info and exit"),
             config  = arg_file0("c", "config", "config.json", "ciri configuration"),
-            dlog    = arg_strn("D", NULL, "LOGGER_ENABLE",0,argc+2,"definitions"),
+            dlvl    = arg_strn("d", "debug", NULL, 0, argc+2, "debug level"),
             end     = arg_end(20),
     };
 
@@ -42,46 +35,14 @@ int main(int argc,char *argv[]) {
     int nerrors;
     nerrors = arg_parse(argc,argv,argtable);
 
-    log_info(MAIN_LOGGER_ID, "Initializing %s\n", progname);
-
-    log_info(MAIN_LOGGER_ID, "Config file: %s\n", config->filename[0]);
-
-    char * buffer = 0;
-    long length;
-    FILE * f = fopen (config->filename[0], "rb");
-
-    if (f)
-    {
-        fseek (f, 0, SEEK_END);
-        length = ftell (f);
-        fseek (f, 0, SEEK_SET);
-        buffer = malloc (length);
-        if (buffer)
-        {
-            fread (buffer, 1, length, f);
-        }
-        fclose (f);
-    }
-
-    struct json_object *jobj, *jobj2;
-    if (buffer)
-    {
-        jobj = json_tokener_parse(buffer);
-        //log_info(MAIN_LOGGER_ID,"%s", json_object_to_json_string_ext(jobj, JSON_C_TO_STRING_SPACED | JSON_C_TO_STRING_PRETTY));
-        json_pointer_get(jobj, "/node/port", &jobj2);
-        int port = json_object_get_int(jobj2);
-        log_info(MAIN_LOGGER_ID,"Node port: %d\n", port);
-    }
-
     /* special case: '--help' takes precedence over error reporting */
-    if (help->count > 0)
-    {
+    if (help->count > 0) {
         printf("Usage: %s", progname);
         arg_print_syntax(stdout, argtable, "\n");
         printf("List information about the FILE(s) "
                "(the current directory by default).\n\n");
         arg_print_glossary(stdout, argtable, "  %-25s %s\n");
-        exitcode = 0;
+        exitcode = EXIT_SUCCESS;
         goto exit;
     }
 
@@ -91,14 +52,51 @@ int main(int argc,char *argv[]) {
         /* Display the error details contained in the arg_end struct.*/
         arg_print_errors(stdout, end, progname);
         printf("Try '%s --help' for more information.\n", progname);
-        exitcode = 1;
+        exitcode = EXIT_FAILURE;
         goto exit;
     }
 
-exit:
-    /* deallocate each non-null entry in argtable[] */
-    arg_freetable(argtable, sizeof(argtable) / sizeof(argtable[0]));
+    if (LOGGER_VERSION != logger_version()) {
+        return EXIT_FAILURE;
+    }
+    logger_init();
+    logger_output_register(stdout);
 
+    if (dlvl->count > 0) {
+        printf("Logging set to %s\n", *dlvl->sval);
+    }
+
+    logger_level_t debug_level;
+    if (strcasecmp(*dlvl->sval, LOG_LEVEL_ALL) == 0) {
+        debug_level = LOGGER_ALL;
+    } else if (strcasecmp(*dlvl->sval, LOG_LEVEL_INFO) == 0) {
+        debug_level = LOGGER_INFO;
+    } else if (strcasecmp(*dlvl->sval, LOG_LEVEL_ERROR) == 0) {
+            debug_level = LOGGER_ERR;
+    } else {
+        debug_level = LOGGER_DEBUG;
+    }
+
+    logger_output_level_set(stdout, debug_level);
+    logger_helper_init(MAIN_LOGGER_ID, debug_level, true);
+
+    log_info(MAIN_LOGGER_ID, "Initializing %s\n", progname);
+
+    if (config->count > 0) {
+        log_info(MAIN_LOGGER_ID, "Config file: %s\n", config->filename[0]);
+
+        binary_data_t *config_file = read_file(config->filename[0]);
+
+        struct json_object *jobj, *jobj2;
+        if (config_file->size > 0) {
+            jobj = json_tokener_parse(config_file->data);
+            free(config_file);
+            //log_info(MAIN_LOGGER_ID,"%s", json_object_to_json_string_ext(jobj, JSON_C_TO_STRING_SPACED | JSON_C_TO_STRING_PRETTY));
+            json_pointer_get(jobj, "/node/port", &jobj2);
+            int port = json_object_get_int(jobj2);
+            log_info(MAIN_LOGGER_ID, "Node port: %d\n", port);
+        }
+    }
 
     int rc;
     MDB_env *env;
@@ -165,5 +163,10 @@ exit:
 
     //int status = server_create();
 
-    return 0;
+
+exit:
+    /* deallocate each non-null entry in argtable[] */
+    arg_freetable(argtable, sizeof(argtable) / sizeof(argtable[0]));
+
+    return exitcode;
 }
