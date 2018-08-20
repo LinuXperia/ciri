@@ -7,9 +7,14 @@
 
 #include <stdio.h>
 #include <time.h>
+#include <uv.h>
+#include <assert.h>
 
-#include "utils/handles/lock.h"
 #include "logger_helper.h"
+
+//See: https://github.com/trevnorris/libuv-examples
+
+static uv_mutex_t mutex;
 
 void logger_helper_init(const char* const logger_id, logger_level_t level,
                         bool enable_color) {
@@ -34,6 +39,7 @@ void logger_helper_destroy(const char* const logger_id) {
     id = logger_id_request(logger_id);
     logger_id_release(id);
     uv_mutex_unlock(&mutex);
+    uv_mutex_destroy(&mutex);
 }
 
 void logger_helper_print(const char* const logger_id, logger_level_t level,
