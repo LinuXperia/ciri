@@ -22,10 +22,10 @@ void set_config(struct arg_file *config) {
 
         struct json_object *jobj2;
         if (config_file->size > 0) {
-            cfg = json_tokener_parse(config_file->data);
+            ciri_config = json_tokener_parse(config_file->data);
             free(config_file);
             //log_info(CONFIG_HELPER_LOGGER_ID,"%s", json_object_to_json_string_ext(jobj, JSON_C_TO_STRING_SPACED | JSON_C_TO_STRING_PRETTY));
-            json_pointer_get(cfg, "/node/port", &jobj2);
+            json_pointer_get(ciri_config, "/node/port", &jobj2);
             int port = json_object_get_int(jobj2);
             log_info(CONFIG_HELPER_LOGGER_ID, "Node port: %d\n", port);
         }

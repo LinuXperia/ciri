@@ -6,7 +6,6 @@
 #include <stdlib.h>
 #include "file_helper.h"
 
-
 //Returns a binary_data_t structure if reading the file was OK.
 //In case of an error it always returns NULL.
 binary_data_t *read_file(const char *filename) {

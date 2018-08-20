@@ -1,7 +1,7 @@
 
-#ifndef SERVER_H_
-#define SERVER_H_
+#ifndef CIRI_SERVER_H
+#define CIRI_SERVER_H
 
 extern int server_create();
 
-#endif  // SERVER_H_
+#endif  // CIRI_SERVER_H

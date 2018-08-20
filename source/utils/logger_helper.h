@@ -5,8 +5,8 @@
  * Refer to the LICENSE file for licensing information
  */
 
-#ifndef LOGGER_HELPER_H_
-#define LOGGER_HELPER_H_
+#ifndef CIRI_LOGGER_HELPER_H
+#define CIRI_LOGGER_HELPER_H
 
 #include <logger.h>
 #include <stdbool.h>
@@ -39,4 +39,4 @@ extern void logger_helper_print(const char* const logger_id,
 extern void logger_helper_printer(const char* const string);
 
 
-#endif  // LOGGER_HELPER_H_
+#endif  // CIRI_LOGGER_HELPER_H

@@ -1,5 +1,8 @@
-#ifndef FILE_HELPER_H
-#define FILE_HELPER_H
+//
+// Created by John Cottrell on 20/8/18.
+//
+#ifndef CIRI_FILE_HELPER_H
+#define CIRI_FILE_HELPER_H
 
 #ifdef __cplusplus
 extern "C" {
@@ -17,4 +20,4 @@ binary_data_t * read_file(const char *filename);
 }
 #endif
 
-#endif //FILE_HELPER_H
+#endif //CIRI_FILE_HELPER_H
