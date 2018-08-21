@@ -46,6 +46,7 @@ include(argtable3_settings)
 include(jsonc_settings)
 include(libuv_settings)
 include(lmdb_settings)
+include(sqlite_settings)
 
 ########## INSTALL ##########
 
@@ -54,7 +55,7 @@ install(DIRECTORY ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/ DESTINATION bin USE_SOURCE_
 
 ########## DEFAULT CONFIG ##########
 
-configure_file(${CMAKE_SOURCE_DIR}/cmake/in/config.json.in ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/config.json)
+configure_file(${CMAKE_MODULE_PATH}/in/config.json.in ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/config.json)
 
 
 
