@@ -1,5 +1,4 @@
 set(LIBUV_DEPS_DIR ${CMAKE_SOURCE_DIR}/deps/libuv)
-configure_file(cmake/in/gitignore.in ${LIBUV_DEPS_DIR}/.gitignore COPYONLY)
 execute_process(COMMAND ${CMAKE_COMMAND} -G "${CMAKE_GENERATOR}" . WORKING_DIRECTORY ${LIBUV_DEPS_DIR})
 execute_process(COMMAND ${CMAKE_COMMAND} --build . WORKING_DIRECTORY ${LIBUV_DEPS_DIR})
 find_library(libuv NAMES libuv_a.a libuv PATHS ${LIBUV_DEPS_DIR} Release NO_DEFAULT_PATH)

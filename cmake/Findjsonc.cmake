@@ -1,5 +1,4 @@
 set(JSONC_DEPS_DIR ${CMAKE_SOURCE_DIR}/deps/json-c)
-configure_file(cmake/in/gitignore.in ${JSONC_DEPS_DIR}/.gitignore COPYONLY)
 execute_process(COMMAND ${CMAKE_COMMAND} -G "${CMAKE_GENERATOR}" . WORKING_DIRECTORY ${JSONC_DEPS_DIR})
 execute_process(COMMAND ${CMAKE_COMMAND} --build . WORKING_DIRECTORY ${JSONC_DEPS_DIR})
 find_library(jsonc NAMES json-c.a json-c PATHS ${JSONC_DEPS_DIR} Release NO_DEFAULT_PATH)
