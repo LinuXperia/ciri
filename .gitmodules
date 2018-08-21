@@ -1,20 +1,20 @@
 [submodule "deps/logger"]
 	path = deps/logger
 	url = https://github.com/embear/logger.git
-	ignore = dirty
+	ignore = all
 [submodule "deps/argtable3"]
 	path = deps/argtable3
 	url = https://github.com/argtable/argtable3.git
-	ignore = dirty
+	ignore = all
 [submodule "deps/json-c"]
 	path = deps/json-c
 	url = https://github.com/json-c/json-c.git
-	ignore = dirty
+	ignore = all
 [submodule "deps/libuv"]
 	path = deps/libuv
 	url = https://github.com/libuv/libuv.git
-	ignore = dirty
+	ignore = all
 [submodule "deps/lmdb"]
 	path = deps/lmdb
 	url = https://github.com/LMDB/lmdb.git
-	ignore = dirty
+	ignore = all
