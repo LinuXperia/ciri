@@ -1,6 +1,8 @@
 project(ciri)
 cmake_minimum_required(VERSION 3.5)
 
+add_compile_options(-Wno-dev)
+
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake")
 configure_file(${CMAKE_SOURCE_DIR}/cmake/in/config.json.in ${CMAKE_BINARY_DIR}/config.json)
 

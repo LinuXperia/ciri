@@ -1,7 +1,5 @@
 .idea
 cmake-build-debug
-deps/argtable3
-deps/libuv
 
 # Prerequisites
 *.d

@@ -1,4 +1,5 @@
 set(ARGTABLE3_DEPS_DIR ${CMAKE_SOURCE_DIR}/deps/argtable3)
+configure_file(cmake/in/gitignore.in ${ARGTABLE3_DEPS_DIR}/.gitignore COPYONLY)
 configure_file(cmake/in/argtable3.in ${ARGTABLE3_DEPS_DIR}/CMakeLists.txt COPYONLY)
 execute_process(COMMAND ${CMAKE_COMMAND} -G "${CMAKE_GENERATOR}" . WORKING_DIRECTORY ${ARGTABLE3_DEPS_DIR})
 execute_process(COMMAND ${CMAKE_COMMAND} --build . WORKING_DIRECTORY ${ARGTABLE3_DEPS_DIR})
