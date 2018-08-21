@@ -1,5 +1,0 @@
-set(LIBUV_DEPS_DIR ${CMAKE_SOURCE_DIR}/deps/libuv)
-execute_process(COMMAND ${CMAKE_COMMAND} -G "${CMAKE_GENERATOR}" . WORKING_DIRECTORY ${LIBUV_DEPS_DIR})
-execute_process(COMMAND ${CMAKE_COMMAND} --build . WORKING_DIRECTORY ${LIBUV_DEPS_DIR})
-find_library(libuv NAMES libuv_a.a libuv PATHS ${LIBUV_DEPS_DIR} Release NO_DEFAULT_PATH)
-include_directories(${LIBUV_DEPS_DIR}/include)

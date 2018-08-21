@@ -1,33 +1,61 @@
+
+########## GLOBAL CONFIGURATION ##########
+
+cmake_minimum_required(VERSION 3.1)
+
+include(ExternalProject)
+
 project(ciri)
-cmake_minimum_required(VERSION 3.5)
 
-add_compile_options(-Wno-dev)
+set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake)
 
-list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake")
-configure_file(${CMAKE_SOURCE_DIR}/cmake/in/config.json.in ${CMAKE_BINARY_DIR}/config.json)
+########## MISC CONFIG ##########
+
+include(misc)
+
+########## PROJECT DIRECTORIES ##########
+
+set(PROJECT_SOURCE_DIR  ${CMAKE_SOURCE_DIR}/source/)
+#set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+
+########## PROJECT FILES ##########
+
+file(GLOB_RECURSE PROJECT_SOURCE_FILES ${PROJECT_SOURCE_DIR}/*.c)
+
+include_directories("${PROJECT_SOURCE_DIR}")
+
+########## DEPENDENCIES ##########
 
 # Note: to refresh deps folder: git pull --recurse-submodules
 
-find_package(Threads REQUIRED)
-find_package(logger REQUIRED)
-find_package(argtable3 REQUIRED)
-find_package(jsonc REQUIRED)
-find_package(libuv REQUIRED)
-find_package(lmdb REQUIRED)
+include_directories(${CMAKE_SOURCE_DIR}/deps/include)
+link_directories(${CMAKE_SOURCE_DIR}/deps/lib)
 
-set(THREADS_PREFER_PTHREAD_FLAG ON)
-set(PROJECT_SOURCE_DIR  ${CMAKE_SOURCE_DIR}/source/)
-file(GLOB_RECURSE PROJECT_SOURCE_FILES ${PROJECT_SOURCE_DIR}/*.c)
+########## EXECUTABLE ##########
 
-include_directories(source)
-add_executable(ciri ${PROJECT_SOURCE_FILES})
+add_executable(${CMAKE_PROJECT_NAME} ${PROJECT_SOURCE_FILES})
+target_compile_options(${CMAKE_PROJECT_NAME} PRIVATE -DLOGGER_ENABLE -v)
 
-target_link_libraries(ciri PRIVATE
-        Threads::Threads
-        ${logger}
-        ${argtable3}
-        ${jsonc}
-        ${libuv}
-        ${lmdb})
+########## COMPILATION SETTINGS ##########
 
-target_compile_options(ciri PRIVATE -DLOGGER_ENABLE)
+#include(compilation_settings)
+
+########## EXTERNAL LIBRARIES ##########
+
+include(logger_settings)
+include(argtable3_settings)
+include(jsonc_settings)
+include(libuv_settings)
+include(lmdb_settings)
+
+########## INSTALL ##########
+
+#install(CODE "FILE(MAKE_DIRECTORY ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})")
+#install(DIRECTORY ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/ DESTINATION bin USE_SOURCE_PERMISSIONS)
+
+########## DEFAULT CONFIG ##########
+
+configure_file(${CMAKE_SOURCE_DIR}/cmake/in/config.json.in ${CMAKE_BINARY_DIR}/config.json)
+
+
+

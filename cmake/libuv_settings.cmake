@@ -1,0 +1,13 @@
+ExternalProject_Add("libuv_dep"
+        GIT_SUBMODULES ""
+        CMAKE_ARGS "-DCMAKE_INSTALL_PREFIX=${CMAKE_SOURCE_DIR}/deps"
+        CMAKE_ARGS "-DCMAKE_ARCHIVE_OUTPUT_DIRECTORY=${CMAKE_SOURCE_DIR}/deps/lib"
+        CMAKE_ARGS "-DCMAKE_LIBRARY_OUTPUT_DIRECTORY=${CMAKE_SOURCE_DIR}/deps/lib"
+        CMAKE_ARGS "-Wno-dev"
+        CMAKE_ARGS "-DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}"
+        CMAKE_ARGS "-DCMAKE_C_FLAGS=${FORWARD_FLAGS}"
+        SOURCE_DIR "${CMAKE_SOURCE_DIR}/deps/libuv")
+
+target_link_libraries(${CMAKE_PROJECT_NAME} uv_a)
+
+add_dependencies(${CMAKE_PROJECT_NAME} libuv_dep)
