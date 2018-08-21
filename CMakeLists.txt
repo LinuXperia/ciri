@@ -16,12 +16,11 @@ include(misc)
 ########## PROJECT DIRECTORIES ##########
 
 set(PROJECT_SOURCE_DIR  ${CMAKE_SOURCE_DIR}/source/)
-#set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
 ########## PROJECT FILES ##########
 
 file(GLOB_RECURSE PROJECT_SOURCE_FILES ${PROJECT_SOURCE_DIR}/*.c)
-
 include_directories("${PROJECT_SOURCE_DIR}")
 
 ########## DEPENDENCIES ##########
@@ -50,12 +49,12 @@ include(lmdb_settings)
 
 ########## INSTALL ##########
 
-#install(CODE "FILE(MAKE_DIRECTORY ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})")
-#install(DIRECTORY ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/ DESTINATION bin USE_SOURCE_PERMISSIONS)
+install(CODE "FILE(MAKE_DIRECTORY ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})")
+install(DIRECTORY ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/ DESTINATION bin USE_SOURCE_PERMISSIONS)
 
 ########## DEFAULT CONFIG ##########
 
-configure_file(${CMAKE_SOURCE_DIR}/cmake/in/config.json.in ${CMAKE_BINARY_DIR}/config.json)
+configure_file(${CMAKE_SOURCE_DIR}/cmake/in/config.json.in ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/config.json)
 
 
 
