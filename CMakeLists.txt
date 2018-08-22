@@ -8,6 +8,7 @@ include(ExternalProject)
 project(ciri)
 
 set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake)
+set(THREADS_PREFER_PTHREAD_FLAG ON)
 
 ########## MISC CONFIG ##########
 
@@ -33,13 +34,16 @@ link_directories(${CMAKE_SOURCE_DIR}/deps/lib)
 ########## EXECUTABLE ##########
 
 add_executable(${CMAKE_PROJECT_NAME} ${PROJECT_SOURCE_FILES})
-target_compile_options(${CMAKE_PROJECT_NAME} PRIVATE -DLOGGER_ENABLE -v)
+target_compile_options(${CMAKE_PROJECT_NAME} PRIVATE -DLOGGER_ENABLE) # -v
 
 ########## COMPILATION SETTINGS ##########
 
 #include(compilation_settings)
 
 ########## EXTERNAL LIBRARIES ##########
+
+find_package(Threads REQUIRED)
+target_link_libraries(${CMAKE_PROJECT_NAME} Threads::Threads)
 
 include(logger_settings)
 include(argtable3_settings)
