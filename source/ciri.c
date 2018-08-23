@@ -4,11 +4,11 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <unistd.h>
+#include <utils/logger_helper.h>
+#include <utils/config_helper.h>
 
 #include "lmdb.h"
 #include "argtable3.h"
-#include "utils/config_helper.h"
-#include "utils/logger_helper.h"
 #include "server/server.h"
 
 #define MAIN_LOGGER_ID "main"
