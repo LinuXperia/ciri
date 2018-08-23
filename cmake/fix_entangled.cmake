@@ -1,1 +1,1 @@
-include_directories("${CMAKE_SOURCE_DIR}/../include")
+include_directories(${DEPS_INCLUDE_DIR})

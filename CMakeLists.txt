@@ -18,6 +18,7 @@ include(misc)
 
 set(PROJECT_SOURCE_DIR  ${CMAKE_SOURCE_DIR}/source/)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+set(DEPS_INCLUDE_DIR ${CMAKE_SOURCE_DIR}/deps/include)
 
 ########## PROJECT FILES ##########
 
@@ -28,7 +29,7 @@ include_directories("${PROJECT_SOURCE_DIR}")
 
 # Note: to refresh deps folder: git pull --recurse-submodules
 
-include_directories(${CMAKE_SOURCE_DIR}/deps/include)
+include_directories(${DEPS_INCLUDE_DIR})
 link_directories(${CMAKE_SOURCE_DIR}/deps/lib)
 
 ########## EXECUTABLE ##########

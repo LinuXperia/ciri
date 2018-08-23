@@ -9,6 +9,7 @@ ExternalProject_Add("entangled_dep"
         CMAKE_ARGS "-Wno-dev"
         CMAKE_ARGS "-DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}"
         CMAKE_ARGS "-DCMAKE_C_FLAGS=${FORWARD_FLAGS}"
+        CMAKE_ARGS "-DDEPS_INCLUDE_DIR:STRING=${DEPS_INCLUDE_DIR}"
         CMAKE_ARGS "-DCMAKE_PROJECT_entangled_INCLUDE=${CMAKE_SOURCE_DIR}/cmake/fix_entangled.cmake"
         SOURCE_DIR "${entangled_BUILD}")
 
