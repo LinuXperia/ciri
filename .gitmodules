@@ -21,3 +21,4 @@
 [submodule "deps/entangled"]
 	path = deps/entangled
 	url = https://github.com/iotaledger/entangled.git
+	ignore = all
