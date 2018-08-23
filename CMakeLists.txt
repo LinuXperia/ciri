@@ -50,7 +50,7 @@ include(argtable3_settings)
 include(jsonc_settings)
 include(libuv_settings)
 include(lmdb_settings)
-#include(sqlite_settings)
+include(sqlite_settings)
 include(entangled_settings)
 
 ########## INSTALL ##########
