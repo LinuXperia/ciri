@@ -1,16 +1,7 @@
 #include <stdlib.h>
-#include <uv.h>
-
-#include "server/server.h"
-
-#define CHECK(r, msg)                                       \
-    if (r<0) {                                              \
-        fprintf(stderr, "%s: %s\n", msg, uv_strerror(r));   \
-        exit(1);                                            \
-    }
-
-static uv_loop_t *uv_loop;
-static uv_udp_t   server;
+#include <utils/logger_helper.h>
+#include <utils/config_helper.h>
+#include "server.h"
 
 static void on_recv(uv_udp_t* handle, ssize_t nread, const uv_buf_t* rcvbuf, const struct sockaddr* addr, unsigned flags) {
     if (nread > 0) {
@@ -27,7 +18,10 @@ static void on_alloc(uv_handle_t* client, size_t suggested_size, uv_buf_t* buf) 
     printf("malloc:%lu %p\n",buf->len,buf->base);
 }
 
-int server_create() {
+retcode_t server_create() {
+
+    logger_helper_init(SERVER_LOGGER_ID, debug_level, true);
+
     int status;
     struct sockaddr_in addr;
     uv_loop = uv_default_loop();
@@ -35,7 +29,11 @@ int server_create() {
     status = uv_udp_init(uv_loop, &server);
     CHECK(status, "init");
 
-    uv_ip4_addr("0.0.0.0", 14600, &addr);
+    json_pointer_get(obj_cfg, "/node/port", &get_cfg);
+    int port = json_object_get_int(get_cfg);
+    log_info(SERVER_LOGGER_ID, "Node port: %d\n", port);
+
+    uv_ip4_addr("0.0.0.0", port, &addr);
 
     status = uv_udp_bind(&server, (const struct sockaddr *) &addr, 0);
     CHECK(status, "bind");
@@ -44,6 +42,7 @@ int server_create() {
     CHECK(status, "recv");
 
     status = uv_run(uv_loop, UV_RUN_DEFAULT);
+    CHECK(status, "loop");
 
-    return status;
+    return E_SUCCESS;
 }
