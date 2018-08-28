@@ -8,7 +8,7 @@
 #include <utils/logger_helper.h>
 #include <utils/config_helper.h>
 #include <db/db.h>
-#include <server/server.h>
+#include <server/udp_server.h>
 
 
 #define MAIN_LOGGER_ID "main"
@@ -77,7 +77,7 @@ int main(int argc,char *argv[]) {
     set_config(config);
 
     retcode_t db = db_load();
-    retcode_t svr = server_create();
+    //retcode_t svr = server_create();
     //int status = server_create();
 
 
